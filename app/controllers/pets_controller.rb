@@ -4,7 +4,9 @@ class PetsController < ApplicationController
 
 
   def index
-    render json: Pet.includes(:user).all
+    limit = params[:limit] || 10
+    offset = params[:offset] || 0
+    render json: Pet.includes(:user).limit(params[:limit]).offset(params[:offset])
   end
 
   def show
