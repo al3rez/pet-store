@@ -3,7 +3,9 @@ class CategoriesController < ApplicationController
   before_action -> { authorize!(%i[pet_owner manager]) }, only: %i[create update destroy]
 
   def index
-    render json: Category.includes(:user).all
+    limit = params[:limit] || 10
+    offset = params[:offset] || 0
+    render json: Category.includes(:user).limit(params[:limit]).offset(params[:offset])
   end
 
   def show
