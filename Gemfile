@@ -50,3 +50,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 # Use rails_param to validate parameters passed to REST APIs
 gem 'rails_param'
+
+# Don't expose database sequential id numbers
+gem "hashid-rails", "~> 1.0"
+
