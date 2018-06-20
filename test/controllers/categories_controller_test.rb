@@ -44,4 +44,30 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_equal @category.name, json_response["name"]
     assert_response :ok
   end
+
+  test "users cannot create categories without authentication" do
+    post categories_url, params: { name: "foo" }
+    assert_response :unauthorized
+  end
+
+  test "users cannot create pets without name" do
+    post categories_url, params: { }, headers: login_basic(@pet_owner.email, @password)
+    assert_response :bad_request
+  end
+
+  test "users cannot create categories with duplicate name in their own scope" do
+    post categories_url, params: { name: "bar" }, headers: login_basic(@pet_owner.email, @password)
+    assert_response :created
+
+    post categories_url, params: { name: "foo" }, headers: login_basic(@manager.email, @password)
+    assert_response :created
+
+    post categories_url, params: { name: "foo" }, headers: login_basic(@pet_owner.email, @password)
+    assert_response :bad_request
+  end
+
+  test "customers cannot create categories" do
+    post categories_url, params: { name: "bar" }, headers: login_basic(@customer.email, @password)
+    assert_response :forbidden
+  end
 end
