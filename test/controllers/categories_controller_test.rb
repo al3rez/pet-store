@@ -88,4 +88,14 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     put url_for(@category), params: { pet_ids: [@pet.id] }, headers: login_basic(@manager.email, @password)
     assert_response :no_content
   end
+
+  test "users can only delete their own pets" do
+    delete url_for(@category), headers: login_basic(@pet_owner2.email, @password)
+    assert_response :not_found
+  end
+
+  test "managers can delete others pets" do
+    delete url_for(@category), headers: login_basic(@manager.email, @password)
+    assert_response :no_content
+  end
 end

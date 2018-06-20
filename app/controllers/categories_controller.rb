@@ -35,4 +35,13 @@ class CategoriesController < ApplicationController
     category.pets = current_user.pets.find(params[:pet_ids])
     category.save!
   end
+
+  def destroy
+    if current_user.manager?
+      Category.find(params[:id]).destroy!
+      return
+    end
+
+    current_user.categories.find(params[:id]).destroy!
+  end
 end
