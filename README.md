@@ -1,24 +1,23 @@
-# README
+# Pet Store API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a simple pet store REST API that simplifies interaction between pet owners and customers.
 
-Things you may want to cover:
+## Sign up
+Register as a new user
 
-* Ruby version
+`POST` http://localhost:3000/sign_up?as=:role
 
-* System dependencies
+#### Path Parameters
+| Parameter | Type    | Description    |
+| ---- | ------- | -------------- |
+| role | String | User role. `pet_owner`, `manager`, `customer`   |
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+#### Result Format - Sign up
+```
+{
+	"email": "test+customer@gmail.com",
+	"role": "customer",
+	"created_at": "2018-06-20T20:30:15.425Z",
+	"updated_at": "2018-06-20T20:30:15.425Z"
+}
+```
