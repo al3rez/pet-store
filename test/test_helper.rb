@@ -10,5 +10,10 @@ class ActiveSupport::TestCase
   def json_response
     JSON.parse(@response.body)
   end
-  # Add more helper methods to be used by all tests here...
+
+  def login_basic(email, password)
+    {
+        HTTP_AUTHORIZATION: ActionController::HttpAuthentication::Basic.encode_credentials(email, password)
+    }
+  end
 end
