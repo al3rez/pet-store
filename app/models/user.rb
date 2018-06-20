@@ -4,4 +4,5 @@ class User < ApplicationRecord
   validates :email, uniqueness: true
 
   has_many :pets
+  has_many :categories
 end
