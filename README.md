@@ -30,7 +30,7 @@ View the details of multiple pets
 #### Path Parameters
 | Parameter | Type    | Description    |
 | ---- | ------- | -------------- |
-| limit | String | How many notifications to return. Default is 10   |
+| limit | String | How many pets to return. Default is 10   |
 | offset | String | Result offset. Default is 0.  |
 
 #### Result Format - View pets
@@ -139,11 +139,19 @@ Update an existing pet
 
 `PUT` http://localhost:3000/pets/:id
 
-#### Path Parameters - Add a pet 
+#### Path Parameters - Update a pet 
 
 | Parameter | Type    | Description    |
 | ---- | ------- | -------------- |
 | id | String | **REQUIRED** Pet ID   |
+
+#### Body Parameters - Update a pet 
+
+| Parameter | Type    | Description    |
+| ---- | ------- | -------------- |
+| name | String | **REQUIRED** Pet name   |
+| pet_type | String | **REQUIRED** Pet type. `dog`, `cat` |
+
 
 #### Result Format - Update a pet
 ```
