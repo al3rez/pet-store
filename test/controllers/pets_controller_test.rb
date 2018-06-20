@@ -15,12 +15,20 @@ class PetsControllerTest < ActionDispatch::IntegrationTest
         password: @password,
         password_confirmation: @password
     )
+    @pet_owner2 = User.create!(
+        role: :pet_owner,
+        email: "test+22@gmail.com",
+        password: @password,
+        password_confirmation: @password
+    )
     @manager = User.create!(
         role: :manager,
         email: "test+3@gmail.com",
         password: @password,
         password_confirmation: @password
     )
+    @pet = Pet.create!(name: "foo", pet_type: "cat", user: @pet_owner)
+    @pet2 = Pet.create!(name: "foo", pet_type: "cat", user: @pet_owner2)
   end
 
   test "all users can view pets without authentication" do
@@ -29,13 +37,7 @@ class PetsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "all users can view pet details without authentication" do
-    pet = Pet.create!(
-        name: "foo",
-        pet_type: "dog",
-        user: @pet_owner
-    )
-
-    get url_for(pet)
+    get url_for(@pet)
 
     assert_equal "foo", json_response["name"]
     assert_response :ok
@@ -52,7 +54,7 @@ class PetsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "users cannot create pets with duplicate in their own scope name" do
-    post pets_url, params: { name: "foo", pet_type: "dog" }, headers: login_basic(@pet_owner.email, @password)
+    post pets_url, params: { name: "bar", pet_type: "dog" }, headers: login_basic(@pet_owner.email, @password)
     assert_response :created
 
     post pets_url, params: { name: "foo", pet_type: "dog" }, headers: login_basic(@manager.email, @password)
@@ -78,27 +80,30 @@ class PetsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "users can only update their own pets" do
-    pet1 = Pet.create!(name: "foo", pet_type: "cat", user: @pet_owner)
-    pet2 = Pet.create!(name: "foo", pet_type: "cat", user: @manager)
-
-    put url_for(pet1), params: { name: "bar", pet_type: "dog"}, headers: login_basic(@pet_owner.email, @password)
+    put url_for(@pet), params: { name: "bar", pet_type: "dog"}, headers: login_basic(@pet_owner.email, @password)
     assert_response :no_content
 
-    put url_for(pet2), params: { name: "bar", pet_type: "dog"}, headers: login_basic(@pet_owner.email, @password)
+    put url_for(@pet2), params: { name: "bar", pet_type: "dog"}, headers: login_basic(@pet_owner.email, @password)
     assert_response :not_found
   end
 
   test "customers cannot update pets" do
-    pet1 = Pet.create!(name: "foo", pet_type: "cat", user: @pet_owner)
-
-    put url_for(pet1), params: { name: "bar", pet_type: "dog"}, headers: login_basic(@customer.email, @password)
+    put url_for(@pet), params: { name: "bar", pet_type: "dog"}, headers: login_basic(@customer.email, @password)
     assert_response :forbidden
   end
 
   test "managers can update others pets" do
-    pet1 = Pet.create!(name: "foo", pet_type: "cat", user: @pet_owner)
+    put url_for(@pet), params: { name: "bar", pet_type: "dog"}, headers: login_basic(@manager.email, @password)
+    assert_response :no_content
+  end
 
-    put url_for(pet1), params: { name: "bar", pet_type: "dog"}, headers: login_basic(@manager.email, @password)
+  test "users can only delete their own pets" do
+    delete url_for(@pet), params: { name: "bar", pet_type: "dog"}, headers: login_basic(@pet_owner2.email, @password)
+    assert_response :not_found
+  end
+
+  test "managers can delete others pets" do
+    delete url_for(@pet), params: { name: "bar", pet_type: "dog"}, headers: login_basic(@manager.email, @password)
     assert_response :no_content
   end
 end

@@ -41,4 +41,13 @@ class PetsController < ApplicationController
     pet.pet_type = params[:pet_type]
     pet.save!
   end
+
+  def destroy
+    if current_user.manager?
+      Pet.find_by_hashid!(params[:id]).destroy!
+      return
+    end
+
+    current_user.pets.find_by_hashid!(params[:id]).destroy!
+  end
 end
