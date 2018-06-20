@@ -88,4 +88,17 @@ class PetsControllerTest < ActionDispatch::IntegrationTest
     assert_response :not_found
   end
 
+  test "customers cannot update pets" do
+    pet1 = Pet.create!(name: "foo", pet_type: "cat", user: @pet_owner)
+
+    put url_for(pet1), params: { name: "bar", pet_type: "dog"}, headers: login_basic(@customer.email, @password)
+    assert_response :forbidden
+  end
+
+  test "managers can update others pets" do
+    pet1 = Pet.create!(name: "foo", pet_type: "cat", user: @pet_owner)
+
+    put url_for(pet1), params: { name: "bar", pet_type: "dog"}, headers: login_basic(@manager.email, @password)
+    assert_response :no_content
+  end
 end

@@ -23,4 +23,22 @@ class PetsController < ApplicationController
 
     render json: pet, status: :created
   end
+
+  def update
+    param! :name, String, required: true
+    param! :pet_type, String, in: Pet.pet_types.keys, required: true
+
+    if current_user.manager?
+      pet = Pet.find_by_hashid!(params[:id])
+      pet.name = params[:name]
+      pet.pet_type = params[:pet_type]
+      pet.save!
+      return
+    end
+
+    pet = current_user.pets.find_by_hashid!(params[:id])
+    pet.name = params[:name]
+    pet.pet_type = params[:pet_type]
+    pet.save!
+  end
 end
