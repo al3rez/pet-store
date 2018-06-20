@@ -23,6 +23,11 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :bad_request
   end
 
+  test 'user cannot sign up with invalid role' do
+    post sign_up_url, params: { as: 'badrole', email: 'test@example.com', password: '1245678@', password_confirmation: '1245678@' }
+    assert_response :bad_request
+  end
+
   test 'user sign up properly' do
     post sign_up_url, params: { as: 'pet_owner', email: 'test@example.com', password: '1245678@', password_confirmation: '1245678@' }
     user = JSON.parse(@response.body)
