@@ -31,6 +31,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 group :test do
   gem 'shoulda', '~> 3.5'
   gem 'shoulda-matchers', '~> 2.0'
+  gem 'simplecov'
 end
 
 group :development, :test do
