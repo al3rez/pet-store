@@ -53,7 +53,7 @@ class PetsControllerTest < ActionDispatch::IntegrationTest
     assert_response :bad_request
   end
 
-  test "users cannot create pets with duplicate in their own scope name" do
+  test "users cannot create pets with duplicate name in their own scope" do
     post pets_url, params: { name: "bar", pet_type: "dog" }, headers: login_basic(@pet_owner.email, @password)
     assert_response :created
 
