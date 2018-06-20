@@ -1,5 +1,7 @@
 class PetsController < ApplicationController
-  before_action :authenticate!, only: [:create]
+  before_action :authenticate!, only: %i[create update delete]
+  before_action -> { authorize!(%i[pet_owner manager]) }, only: %i[create update destroy]
+
 
   def index
     render json: Pet.includes(:user).all
