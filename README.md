@@ -113,9 +113,8 @@ Add a new pet to your collection
 
 | Parameter | Type    | Description    |
 | ---- | ------- | -------------- |
-| email | String | **REQUIRED** Email address   |
-| password | String | **REQUIRED** Password   |
-| password | String | **REQUIRED** Password confirmation   |
+| name | String | **REQUIRED** Pet name   |
+| pet_type | String | **REQUIRED** Pet type. `dog`, `cat` |
 
 #### Result Format - Add a pet
 ```
@@ -140,7 +139,7 @@ Update an existing pet
 
 `PUT` http://localhost:3000/pets/:id
 
-#### Body Parameters - Add a pet 
+#### Path Parameters - Add a pet 
 
 | Parameter | Type    | Description    |
 | ---- | ------- | -------------- |
@@ -155,7 +154,7 @@ Update an existing pet
 Delete an existing pet
 
 
-`PUT` http://localhost:3000/pets/:id
+`DELETE` http://localhost:3000/pets/:id
 
 #### Body Parameters - Add a pet 
 
