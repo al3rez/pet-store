@@ -54,3 +54,9 @@ gem 'rails_param'
 # Don't expose database sequential id numbers
 gem "hashid-rails", "~> 1.0"
 
+# Use ActiveModel::Serializers to easily serialize models into JSON
+gem "active_model_serializers"
+
+# Use oj an optimized JSON parser and marshaller to
+# make serialization and deserialization faster
+gem 'oj'
