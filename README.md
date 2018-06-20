@@ -1,4 +1,4 @@
-# Pet Store API
+# Pet Store API [![Build Status](https://travis-ci.org/azbshiri/pet-store.svg?branch=master)](https://travis-ci.org/azbshiri/pet-store)
 
 This is a simple pet store REST API that simplifies interaction between pet owners and customers.
 
