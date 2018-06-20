@@ -174,3 +174,148 @@ Delete an existing pet
 ```
 {}
 ```
+
+## View categories
+View the details of multiple categories
+
+`GET` http://localhost:3000/categories?limit=:limit&offset=:offset
+
+#### Path Parameters
+| Parameter | Type    | Description    |
+| ---- | ------- | -------------- |
+| limit | String | How many categories to return. Default is 10   |
+| offset | String | Result offset. Default is 0.  |
+
+#### Result Format - View pets
+```
+[
+	{
+		"id": 1,
+		"name": "foo",
+		"created_at": "2018-06-20T23:15:33.008Z",
+		"updated_at": "2018-06-20T23:15:33.008Z",
+		"user": {
+			"email": "azbshiri+manager@gmail.com",
+			"role": "manager",
+			"created_at": "2018-06-20T20:27:23.013Z",
+			"updated_at": "2018-06-20T20:27:23.013Z"
+		},
+		"pets": []
+	},
+	{
+		"id": 2,
+		"name": "bar",
+		"created_at": "2018-06-20T23:15:33.008Z",
+		"updated_at": "2018-06-20T23:15:33.008Z",
+		"user": {
+			"email": "azbshiri+manager@gmail.com",
+			"role": "manager",
+			"created_at": "2018-06-20T20:27:23.013Z",
+			"updated_at": "2018-06-20T20:27:23.013Z"
+		},
+		"pets": []
+	}
+]
+```
+
+
+
+## View category
+View the details of a single category
+
+
+`GET` http://localhost:3000/categories/:id
+
+#### Path Parameters
+| Parameter | Type    | Description    |
+| ---- | ------- | -------------- |
+| id | String | **REQUIRED** Category ID   |
+
+#### Result Format - View pet
+```
+{
+	"id": 1,
+	"name": "foo",
+	"created_at": "2018-06-20T23:15:33.008Z",
+	"updated_at": "2018-06-20T23:15:33.008Z",
+	"user": {
+		"email": "azbshiri+manager@gmail.com",
+		"role": "manager",
+		"created_at": "2018-06-20T20:27:23.013Z",
+		"updated_at": "2018-06-20T20:27:23.013Z"
+	},
+	"pets": []
+}
+```
+
+## Add a category
+Add a new category to your collection
+
+`POST` http://localhost:3000/categories
+
+#### Body Parameters - Add a category 
+
+| Parameter | Type    | Description    |
+| ---- | ------- | -------------- |
+| name | String | **REQUIRED** Category name   |
+
+#### Result Format - Add a category
+```
+{
+	"id": 1,
+	"name": "foo",
+	"created_at": "2018-06-20T23:15:33.008Z",
+	"updated_at": "2018-06-20T23:15:33.008Z",
+	"user": {
+		"email": "azbshiri+manager@gmail.com",
+		"role": "manager",
+		"created_at": "2018-06-20T20:27:23.013Z",
+		"updated_at": "2018-06-20T20:27:23.013Z"
+	},
+	"pets": []
+}
+```
+
+## Update a category
+
+Update an existing category
+
+
+`PUT` http://localhost:3000/categories/:id
+
+#### Path Parameters - Update a category 
+
+| Parameter | Type    | Description    |
+| ---- | ------- | -------------- |
+| id | String | **REQUIRED** Category ID   |
+
+
+#### Body Parameters - Update a category 
+
+| Parameter | Type    | Description    |
+| ---- | ------- | -------------- |
+| name | String | **REQUIRED** Category name   |
+| pet_ids | Array | **REQUIRED** IDs of pets that belongs to the category.   |
+
+
+#### Result Format - Update a category
+```
+{}
+```
+
+## Delete a category
+Delete an existing category
+
+
+`DELETE` http://localhost:3000/categories/:id
+
+#### Body Parameters - Delete a category 
+
+| Parameter | Type    | Description    |
+| ---- | ------- | -------------- |
+| id | String | **REQUIRED** Category ID   |
+
+#### Result Format - Delete a category
+```
+{}
+```
