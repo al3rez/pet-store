@@ -70,4 +70,22 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     post categories_url, params: { name: "bar" }, headers: login_basic(@customer.email, @password)
     assert_response :forbidden
   end
+
+  test "users can only update their own categories" do
+    put url_for(@category), params: { pet_ids: [@pet.id] }, headers: login_basic(@pet_owner.email, @password)
+    assert_response :no_content
+
+    put url_for(@category2), params: { pet_ids: [@pet2.id] }, headers: login_basic(@pet_owner.email, @password)
+    assert_response :not_found
+  end
+
+  test "customers cannot update categories" do
+    put url_for(@category), params: { pet_ids: [@pet.id] }, headers: login_basic(@customer.email, @password)
+    assert_response :forbidden
+  end
+
+  test "managers can update others categories" do
+    put url_for(@category), params: { pet_ids: [@pet.id] }, headers: login_basic(@manager.email, @password)
+    assert_response :no_content
+  end
 end

@@ -20,4 +20,19 @@ class CategoriesController < ApplicationController
 
     render json: category, status: :created
   end
+
+  def update
+    param! :pet_ids, Array, required: true
+
+    if current_user.manager?
+      category = Category.find(params[:id])
+      category.pets = Pet.find(params[:pet_ids])
+      category.save!
+      return
+    end
+
+    category = current_user.categories.find(params[:id])
+    category.pets = current_user.pets.find(params[:pet_ids])
+    category.save!
+  end
 end
