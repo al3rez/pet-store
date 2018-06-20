@@ -3,4 +3,5 @@
 Rails.application.routes.draw do
   post :sign_up, to: 'users#sign_up'
   resources :pets
+  resources :categories
 end
